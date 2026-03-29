@@ -77,7 +77,7 @@ public class FirstTests extends TestBase {
   @Test()
   @Description("This is simple test checking GET method, response 404")
   public void checkGetMethodResponse404() {
-    System.out.println("Change to allure step. Check request 404");
+    System.out.println("Check request 404");
     apiResponse = apiRestMethod.getMethod(-98, 404);
     assertNull(apiResponse.getBody());
   }
@@ -85,8 +85,7 @@ public class FirstTests extends TestBase {
   @Test()
   @Description("This is simple test checking POST method")
   public void checkPostMethod() {
-    System.out.println(
-        "Check post request.We use recursiveCompare to check all fields if its ok or not");
+    System.out.println("Check post request");
     PostPutResponse postResponse =
         apiRestMethod.postMethod(new ApiGetResponse(1, 1, "Title example", "Body example"), 201);
     PostPutResponse expectedPostResponse = new PostPutResponse(101);
@@ -97,8 +96,7 @@ public class FirstTests extends TestBase {
   @Test()
   @Description("This is simple test checking DELETE method")
   public void checkDeleteMethod() {
-    System.out.println(
-        "Check delete request.We use recursiveCompare to check all fields if its ok or not");
+    System.out.println("Check delete request.");
     final Integer id = 5;
     apiRestMethod.deleteMethod(id, 200);
   }

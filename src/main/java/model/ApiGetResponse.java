@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class ApiGetResponse {
   Integer id;
-  Integer UserId;
+  Integer userId;
   String title;
   String body;
 }

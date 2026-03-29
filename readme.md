@@ -4,7 +4,7 @@ After run test you can generate report using allure serve:
 
 and then u will see your report!
 
-![img_2.png](img_2.png)
+![img_4.png](img_4.png)
 
 We use spotless to get better code
 
