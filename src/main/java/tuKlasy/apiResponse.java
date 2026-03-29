@@ -7,7 +7,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class apiResponse {
+public class ApiResponse {
   Integer id;
   Integer UserId;
   String title;
