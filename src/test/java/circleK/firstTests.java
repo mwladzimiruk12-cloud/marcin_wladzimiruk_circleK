@@ -9,12 +9,12 @@ import io.qameta.allure.Description;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+import model.ApiGetResponse;
+import model.PostPutResponse;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import rest.ApiRestMethod;
-import model.ApiGetResponse;
-import model.PostPutResponse;
 
 public class FirstTests extends TestConfig {
   ApiRestMethod apiRestMethod = new ApiRestMethod();
@@ -24,6 +24,34 @@ public class FirstTests extends TestConfig {
   public void setUp() {
     System.out.println("We use spotless, allure, and....");
     RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
+  }
+
+  @Test()
+  @Description("This is simple test checking PUT method")
+  public void checkPutMethod() {
+    Allure.step(
+            "Check PUT methid",
+            () -> {
+              System.out.println("Check put request.");
+            });
+    final Integer id = 5;
+
+    Allure.parameter(
+            "id",
+            id); // Using allure.parameter is usefull to see this data on test report
+
+    PostPutResponse postResponse = Allure.step(
+            "Send request",
+            () -> {return                      apiRestMethod.putMethod(
+                              new ApiGetResponse(2, 2, "Title example", "Body example"), id, 200);
+            });
+
+    Allure.step(
+            "Assert response",
+            () -> {
+              PostPutResponse expectedPostResponse = new PostPutResponse(id);
+              assertThat(postResponse).usingRecursiveComparison().isEqualTo(expectedPostResponse);
+            });
   }
 
   @Test()
@@ -71,24 +99,6 @@ public class FirstTests extends TestConfig {
         .ignoringFields() // here we can define what fields we want to ignore in compare for example
         // if api return actual dateTime
         .isEqualTo(expectedPostResponse);
-  }
-
-  @Test()
-  @Description("This is simple test checking PUT method")
-  public void checkPutMethod() {
-    Allure.step("Check",
-            () ->{
-            System.out.println(
-                    "Check put request.We use recursiveCompare to check all fields if its ok or not");
-    });
-
-
-    final Integer id = 5;
-    PostPutResponse postResponse =
-        apiRestMethod.putMethod(new ApiGetResponse(2, 2, "Title example", "Body example"), id, 200);
-    PostPutResponse expectedPostResponse = new PostPutResponse(id);
-
-    assertThat(postResponse).usingRecursiveComparison().isEqualTo(expectedPostResponse);
   }
 
   @Test()
