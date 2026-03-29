@@ -30,28 +30,28 @@ public class FirstTests extends TestConfig {
   @Description("This is simple test checking PUT method")
   public void checkPutMethod() {
     Allure.step(
-            "Check PUT methid",
-            () -> {
-              System.out.println("Check put request.");
-            });
+        "Check PUT methid",
+        () -> {
+          System.out.println("Check put request.");
+        });
     final Integer id = 5;
 
-    Allure.parameter(
-            "id",
-            id); // Using allure.parameter is usefull to see this data on test report
+    Allure.parameter("id", id); // Using allure.parameter is usefull to see this data on test report
 
-    PostPutResponse postResponse = Allure.step(
+    PostPutResponse postResponse =
+        Allure.step(
             "Send request",
-            () -> {return                      apiRestMethod.putMethod(
-                              new ApiGetResponse(2, 2, "Title example", "Body example"), id, 200);
+            () -> {
+              return apiRestMethod.putMethod(
+                  new ApiGetResponse(2, 2, "Title example", "Body example"), id, 200);
             });
 
     Allure.step(
-            "Assert response",
-            () -> {
-              PostPutResponse expectedPostResponse = new PostPutResponse(id);
-              assertThat(postResponse).usingRecursiveComparison().isEqualTo(expectedPostResponse);
-            });
+        "Assert response",
+        () -> {
+          PostPutResponse expectedPostResponse = new PostPutResponse(id);
+          assertThat(postResponse).usingRecursiveComparison().isEqualTo(expectedPostResponse);
+        });
   }
 
   @Test()
@@ -96,8 +96,6 @@ public class FirstTests extends TestConfig {
 
     assertThat(postResponse)
         .usingRecursiveComparison()
-        .ignoringFields() // here we can define what fields we want to ignore in compare for example
-        // if api return actual dateTime
         .isEqualTo(expectedPostResponse);
   }
 
