@@ -29,12 +29,13 @@ public class FirstTests extends TestConfig {
   @Test()
   @Description("This is simple test checking PUT method")
   public void checkPutMethod() {
+    final Integer id = 5;
+
     Allure.step(
-        "Check PUT methid",
+        "Check PUT method",
         () -> {
           System.out.println("Check put request.");
         });
-    final Integer id = 5;
 
     Allure.parameter("id", id); // Using allure.parameter is usefull to see this data on test report
 
