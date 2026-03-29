@@ -3,12 +3,9 @@ package circleK;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.testng.Assert.assertNull;
 
-import circleK.bases.TestConfig;
+import circleK.bases.TestBase;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
-import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import model.ApiGetResponse;
 import model.PostPutResponse;
 import org.testng.annotations.AfterClass;
@@ -16,14 +13,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import rest.ApiRestMethod;
 
-public class FirstTests extends TestConfig {
+public class FirstTests extends TestBase {
   ApiRestMethod apiRestMethod = new ApiRestMethod();
   ApiGetResponse apiResponse;
 
   @BeforeClass
   public void setUp() {
     System.out.println("We use spotless, allure, and....");
-    RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
   }
 
   @Test()
@@ -95,9 +91,7 @@ public class FirstTests extends TestConfig {
         apiRestMethod.postMethod(new ApiGetResponse(1, 1, "Title example", "Body example"), 201);
     PostPutResponse expectedPostResponse = new PostPutResponse(101);
 
-    assertThat(postResponse)
-        .usingRecursiveComparison()
-        .isEqualTo(expectedPostResponse);
+    assertThat(postResponse).usingRecursiveComparison().isEqualTo(expectedPostResponse);
   }
 
   @Test()

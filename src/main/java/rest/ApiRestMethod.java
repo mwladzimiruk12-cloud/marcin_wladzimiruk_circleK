@@ -3,20 +3,21 @@ package rest;
 import static io.restassured.RestAssured.given;
 
 import com.diffplug.spotless.maven.json.Json;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import model.ApiGetResponse;
 import model.PostPutResponse;
+import org.springframework.stereotype.Component;
 
 @Log4j
-@RequiredArgsConstructor
+@Component
 public class ApiRestMethod {
-  private static final String URL = "https://jsonplaceholder.typicode.com/posts/";
+  private final ApiRestAssuredConfig apiRestAssuredConfig = new ApiRestAssuredConfig();
 
   public ApiGetResponse getMethod(Integer id, Integer statusCode) {
     return given()
+        .config(apiRestAssuredConfig.getRestAssuredConfig())
         .when()
-        .get(URL + id)
+        .get(id.toString())
         .then()
         .statusCode(statusCode)
         .extract()
@@ -26,10 +27,11 @@ public class ApiRestMethod {
 
   public PostPutResponse postMethod(ApiGetResponse apiResponse, Integer statusCode) {
     return given()
+        .config(apiRestAssuredConfig.getRestAssuredConfig())
         .with()
         .body(apiResponse)
         .when()
-        .post(URL)
+        .post()
         .then()
         .statusCode(statusCode)
         .extract()
@@ -39,10 +41,11 @@ public class ApiRestMethod {
 
   public PostPutResponse putMethod(ApiGetResponse apiResponse, Integer id, Integer statusCode) {
     return given()
+        .config(apiRestAssuredConfig.getRestAssuredConfig())
         .with()
         .body(apiResponse)
         .when()
-        .put(URL + id)
+        .put(id.toString())
         .then()
         .statusCode(statusCode)
         .extract()
@@ -52,8 +55,9 @@ public class ApiRestMethod {
 
   public Json deleteMethod(Integer id, Integer statusCode) {
     return given()
+        .config(apiRestAssuredConfig.getRestAssuredConfig())
         .when()
-        .delete(URL + id)
+        .delete(id.toString())
         .then()
         .statusCode(statusCode)
         .extract()
