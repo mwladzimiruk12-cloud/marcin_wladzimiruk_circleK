@@ -1,4 +1,4 @@
-package tuKlasy;
+package model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class PostPutResponse {
+public class ApiGetResponse {
   Integer id;
+  Integer UserId;
+  String title;
+  String body;
 }

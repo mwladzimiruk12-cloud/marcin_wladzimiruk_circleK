@@ -5,8 +5,8 @@ import static io.restassured.RestAssured.given;
 import com.diffplug.spotless.maven.json.Json;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import tuKlasy.ApiGetResponse;
-import tuKlasy.PostPutResponse;
+import model.ApiGetResponse;
+import model.PostPutResponse;
 
 @Log4j
 @RequiredArgsConstructor

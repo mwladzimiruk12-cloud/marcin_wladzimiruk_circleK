@@ -4,6 +4,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.testng.Assert.assertNull;
 
 import circleK.bases.TestConfig;
+import io.qameta.allure.Allure;
+import io.qameta.allure.Description;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -11,8 +13,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import rest.ApiRestMethod;
-import tuKlasy.ApiGetResponse;
-import tuKlasy.PostPutResponse;
+import model.ApiGetResponse;
+import model.PostPutResponse;
 
 public class FirstTests extends TestConfig {
   ApiRestMethod apiRestMethod = new ApiRestMethod();
@@ -25,6 +27,7 @@ public class FirstTests extends TestConfig {
   }
 
   @Test()
+  @Description("This is simple test checking GET method")
   public void checkGetMethodResponse200() {
     System.out.println(
         "Check 200 response. We use recursiveCompare to check all fields if its ok or not");
@@ -47,6 +50,7 @@ public class FirstTests extends TestConfig {
   }
 
   @Test()
+  @Description("This is simple test checking GET method, response 404")
   public void checkGetMethodResponse404() {
     System.out.println("Change to allure step. Check request 404");
     apiResponse = apiRestMethod.getMethod(-98, 404);
@@ -54,6 +58,7 @@ public class FirstTests extends TestConfig {
   }
 
   @Test()
+  @Description("This is simple test checking POST method")
   public void checkPostMethod() {
     System.out.println(
         "Check post request.We use recursiveCompare to check all fields if its ok or not");
@@ -69,9 +74,15 @@ public class FirstTests extends TestConfig {
   }
 
   @Test()
+  @Description("This is simple test checking PUT method")
   public void checkPutMethod() {
-    System.out.println(
-        "Check put request.We use recursiveCompare to check all fields if its ok or not");
+    Allure.step("Check",
+            () ->{
+            System.out.println(
+                    "Check put request.We use recursiveCompare to check all fields if its ok or not");
+    });
+
+
     final Integer id = 5;
     PostPutResponse postResponse =
         apiRestMethod.putMethod(new ApiGetResponse(2, 2, "Title example", "Body example"), id, 200);
@@ -81,6 +92,7 @@ public class FirstTests extends TestConfig {
   }
 
   @Test()
+  @Description("This is simple test checking DELETE method")
   public void checkDeleteMethod() {
     System.out.println(
         "Check delete request.We use recursiveCompare to check all fields if its ok or not");
