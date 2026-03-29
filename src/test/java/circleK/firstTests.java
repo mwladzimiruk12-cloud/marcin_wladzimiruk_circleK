@@ -11,31 +11,26 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import rest.ApiRestMethod;
-import tuKlasy.ApiResponse;
-import tuKlasy.PostResponse;
+import tuKlasy.ApiGetResponse;
+import tuKlasy.PostPutResponse;
 
 public class FirstTests extends TestConfig {
   ApiRestMethod apiRestMethod = new ApiRestMethod();
-  ApiResponse apiResponse;
+  ApiGetResponse apiResponse;
 
   @BeforeClass
   public void setUp() {
     System.out.println("We use spotless, allure, and....");
-    //      ApiResponse apiResponse1 = new ApiResponse();
-    //      apiResponse1.setId(1);
-
-    //    Assert.assertEquals(apiResponse.getBody(),"cos innego");
-    // code that will be invoked when this test is instantiated
     RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter());
   }
 
   @Test()
-  public void checkResponse200() {
+  public void checkGetMethodResponse200() {
     System.out.println(
         "Check 200 response. We use recursiveCompare to check all fields if its ok or not");
     apiResponse = apiRestMethod.getMethod(1, 200);
-    ApiResponse expectedApiResponse =
-        new ApiResponse(
+    ApiGetResponse expectedApiResponse =
+        new ApiGetResponse(
             1,
             1,
             "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
@@ -52,20 +47,19 @@ public class FirstTests extends TestConfig {
   }
 
   @Test()
-  public void checkResponse404() {
+  public void checkGetMethodResponse404() {
     System.out.println("Change to allure step. Check request 404");
-    ApiResponse apiResponse1 = new ApiResponse();
-    apiResponse1 = apiRestMethod.getMethod(-98, 404);
-    assertNull(apiResponse1.getBody());
+    apiResponse = apiRestMethod.getMethod(-98, 404);
+    assertNull(apiResponse.getBody());
   }
 
   @Test()
-  public void checkPost() {
+  public void checkPostMethod() {
     System.out.println(
         "Check post request.We use recursiveCompare to check all fields if its ok or not");
-    PostResponse postResponse =
-        apiRestMethod.postMethod(new ApiResponse(1, 1, "Title example", "Body example"), 201);
-    PostResponse expectedPostResponse = new PostResponse(101);
+    PostPutResponse postResponse =
+        apiRestMethod.postMethod(new ApiGetResponse(1, 1, "Title example", "Body example"), 201);
+    PostPutResponse expectedPostResponse = new PostPutResponse(101);
 
     assertThat(postResponse)
         .usingRecursiveComparison()
@@ -75,8 +69,23 @@ public class FirstTests extends TestConfig {
   }
 
   @Test()
-  public void aSlowTest() {
-    System.out.println("Slow test");
+  public void checkPutMethod() {
+    System.out.println(
+        "Check put request.We use recursiveCompare to check all fields if its ok or not");
+    final Integer id = 5;
+    PostPutResponse postResponse =
+        apiRestMethod.putMethod(new ApiGetResponse(2, 2, "Title example", "Body example"), id, 200);
+    PostPutResponse expectedPostResponse = new PostPutResponse(id);
+
+    assertThat(postResponse).usingRecursiveComparison().isEqualTo(expectedPostResponse);
+  }
+
+  @Test()
+  public void checkDeleteMethod() {
+    System.out.println(
+        "Check delete request.We use recursiveCompare to check all fields if its ok or not");
+    final Integer id = 5;
+    apiRestMethod.deleteMethod(id, 200);
   }
 
   @AfterClass
