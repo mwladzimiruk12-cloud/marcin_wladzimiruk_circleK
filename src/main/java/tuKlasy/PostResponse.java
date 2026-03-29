@@ -9,9 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class ApiResponse {
+public class PostResponse {
   Integer id;
-  Integer UserId;
-  String title;
-  String body;
 }
